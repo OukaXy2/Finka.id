@@ -1,0 +1,1716 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Finka — Template Keuangan UMKM</title>
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231a2e4a'/><text y='.9em' font-size='70' x='50%' dominant-baseline='middle' text-anchor='middle' font-family='Georgia,serif' fill='%23f59e0b' font-weight='900'>F</text></svg>">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Finka — Template Keuangan UMKM">
+<meta property="og:description" content="Tidak perlu ilmu akuntansi. Cukup isi spreadsheet — laporan laba rugi langsung jadi sendiri. Mulai dari Rp29.000, bayar sekali selamanya.">
+<meta property="og:url" content="https://finka.id">
+<meta property="og:image" content="https://finka.id/og-image.jpg">
+<meta property="og:locale" content="id_ID">
+<meta property="og:site_name" content="Finka">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Finka — Template Keuangan UMKM">
+<meta name="twitter:description" content="Tidak perlu ilmu akuntansi. Cukup isi spreadsheet — laporan laba rugi langsung jadi sendiri. Mulai dari Rp29.000, bayar sekali selamanya.">
+<meta name="twitter:image" content="https://finka.id/og-image.jpg">
+
+<meta name="description" content="Template keuangan Excel/Google Sheets untuk UMKM. Laporan laba rugi otomatis, manajemen stok, dashboard keuangan. Mulai Rp29.000, bayar sekali selamanya.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Fraunces:ital,wght@0,700;0,900;1,700;1,900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1a2e4a;
+    --navy-mid: #243858;
+    --navy-light: #2e4a70;
+    --navy-pale: #eef3f9;
+    --navy-soft: #f4f7fb;
+    --green: #16a34a;
+    --green-light: #22c55e;
+    --green-pale: #f0fdf4;
+    --green-mid: #dcfce7;
+    --green-dark: #14532d;
+    --amber: #f59e0b;
+    --amber-light: #fef3c7;
+    --amber-dark: #92400e;
+    --red-soft: #fef2f2;
+    --red: #ef4444;
+    --slate: #1a2e4a;
+    --slate-mid: #334155;
+    --slate-light: #64748b;
+    --border: #dde5ef;
+    --bg: #ffffff;
+    --bg-soft: #f4f7fb;
+    --bg-warm: #fffbf0;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { overflow-x: hidden; width: 100%; max-width: 100vw; }
+  html { scroll-behavior: smooth; }
+  img, svg, video, canvas, audio, iframe, embed, object { max-width: 100%; display: block; }
+
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: var(--bg);
+    color: var(--slate);
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--navy);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    width: 100%;
+    left: 0;
+  }
+
+  .nav-logo {
+    font-family: 'Fraunces', serif;
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: -0.03em;
+  }
+
+  .nav-logo span { color: var(--amber); }
+
+  .nav-links {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+    align-items: center;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    color: rgba(255,255,255,0.65);
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: color 0.15s;
+  }
+
+  .nav-links a:hover { color: #fff; }
+
+  .nav-cta {
+    background: var(--amber) !important;
+    color: #fff !important;
+    padding: 9px 20px;
+    border-radius: 8px;
+    font-weight: 700 !important;
+    font-size: 0.85rem !important;
+    transition: background 0.15s !important;
+  }
+
+  .nav-cta:hover { background: #d97706 !important; }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--bg);
+    padding: 80px 32px 72px;
+    max-width: 1100px;
+    width: 100%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+  }
+
+  .hero-left {}
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--navy-pale);
+    border: 1px solid #c5d5e8;
+    border-radius: 100px;
+    padding: 6px 14px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--navy);
+    letter-spacing: 0.04em;
+    margin-bottom: 24px;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .hero-badge::before {
+    content: '✦';
+    font-size: 0.6rem;
+    color: var(--navy-light);
+  }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(2.4rem, 4.5vw, 3.6rem);
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    color: var(--slate);
+    margin-bottom: 20px;
+    animation: fadeUp 0.5s 0.08s ease both;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--navy-light);
+  }
+
+  .hero-sub {
+    font-size: 1.05rem;
+    color: var(--slate-mid);
+    margin-bottom: 36px;
+    line-height: 1.7;
+    font-weight: 400;
+    animation: fadeUp 0.5s 0.14s ease both;
+    max-width: 100%;
+    word-break: break-word;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    animation: fadeUp 0.5s 0.2s ease both;
+  }
+
+  .btn-green {
+    background: var(--navy);
+    color: #fff;
+    text-decoration: none;
+    padding: 14px 28px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    transition: all 0.15s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 4px 16px rgba(26,46,74,0.25);
+  }
+
+  .btn-green:hover {
+    background: var(--navy-light);
+    box-shadow: 0 6px 20px rgba(26,46,74,0.35);
+    transform: translateY(-1px);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--slate);
+    text-decoration: none;
+    padding: 14px 24px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border: 1.5px solid var(--border);
+    transition: all 0.15s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .btn-outline:hover {
+    border-color: var(--navy);
+    color: var(--navy);
+    background: var(--navy-pale);
+  }
+
+  .hero-trust {
+    margin-top: 32px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    animation: fadeUp 0.5s 0.26s ease both;
+  }
+
+  .trust-avatars {
+    display: flex;
+  }
+
+  .trust-avatar {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-left: -8px;
+    color: #fff;
+  }
+
+  .trust-avatar:first-child { margin-left: 0; }
+  .ta1 { background: #1a2e4a; }
+  .ta2 { background: #2563eb; }
+  .ta3 { background: #d97706; }
+  .ta4 { background: #9333ea; }
+
+  .trust-text { font-size: 0.82rem; color: var(--slate-light); }
+  .trust-text strong { color: var(--slate); }
+
+  /* ── SECTION BASE ── */
+  .wrap {
+    max-width: 1100px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 88px 32px;
+  }
+
+  .section-chip {
+    display: inline-block;
+    background: var(--navy-pale);
+    border: 1px solid #c5d5e8;
+    color: var(--navy);
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 5px 12px;
+    border-radius: 100px;
+    margin-bottom: 16px;
+  }
+
+  .section-chip.amber {
+    background: var(--amber-light);
+    border-color: #fde68a;
+    color: var(--amber-dark);
+  }
+
+  h2 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(1.9rem, 3.5vw, 2.8rem);
+    font-weight: 900;
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+    color: var(--slate);
+    margin-bottom: 14px;
+  }
+
+  h2 em { font-style: italic; color: var(--navy-light); }
+
+  .sec-sub {
+    color: var(--slate-mid);
+    font-size: 1rem;
+    max-width: 500px;
+    font-weight: 400;
+    line-height: 1.65;
+  }
+
+  /* ── PAIN SECTION ── */
+  .pain-section { background: var(--navy-soft); border-top: 1px solid #dde5ef; border-bottom: 1px solid #dde5ef; }
+
+  .pain-header { margin-bottom: 52px; }
+
+  .pain-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 16px;
+  }
+
+  .pain-card {
+    background: #fff;
+    border: 1.5px solid #dde5ef;
+    border-radius: 14px;
+    padding: 24px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    transition: all 0.2s;
+  }
+
+  .pain-card:hover {
+    border-color: var(--navy-light);
+    box-shadow: 0 4px 20px rgba(26,46,74,0.1);
+    transform: translateY(-2px);
+  }
+
+  .pain-emoji { font-size: 1.7rem; line-height: 1; flex-shrink: 0; }
+
+  .pain-card h3 {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--slate);
+    margin-bottom: 5px;
+  }
+
+  .pain-card p {
+    font-size: 0.82rem;
+    color: var(--slate-light);
+    line-height: 1.55;
+  }
+
+  /* ── PREVIEW ── */
+  .preview-section { background: var(--bg); }
+
+  .preview-header { text-align: center; margin-bottom: 48px; }
+  .preview-header .sec-sub { margin: 0 auto; text-align: center; }
+
+  .tab-row {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 36px;
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 6px;
+    max-width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .tab-btn {
+    background: transparent;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--slate-light);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .tab-btn.active {
+    background: var(--navy);
+    color: #fff;
+    box-shadow: 0 1px 6px rgba(26,46,74,0.2);
+  }
+
+  .preview-pane { display: none; }
+  .preview-pane.active { display: block; animation: fadeIn 0.3s ease; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .mock-browser {
+    background: #fff;
+    border: 1.5px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 12px 48px rgba(0,0,0,0.09);
+  }
+
+  .mock-topbar {
+    background: var(--bg-soft);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .mdot { width: 11px; height: 11px; border-radius: 50%; }
+  .mdot-r { background: #fca5a5; }
+  .mdot-y { background: #fde68a; }
+  .mdot-g { background: #86efac; }
+
+  .mock-filename {
+    font-size: 0.78rem;
+    color: var(--slate-light);
+    font-weight: 500;
+    margin-left: 8px;
+  }
+
+  .mock-sheet-tabs {
+    background: #f1f5f9;
+    border-bottom: 1px solid var(--border);
+    padding: 0 20px;
+    display: flex;
+    gap: 2px;
+    overflow-x: auto;
+  }
+
+  .mst {
+    padding: 8px 16px;
+    font-size: 0.76rem;
+    color: var(--slate-light);
+    font-weight: 500;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    cursor: default;
+  }
+
+  .mst.active {
+    color: var(--navy);
+    border-bottom-color: var(--navy);
+    background: #fff;
+    font-weight: 700;
+  }
+
+  .mock-body { padding: 24px; overflow-x: auto; }
+
+  .mock-section-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--navy);
+    background: var(--navy-pale);
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 6px;
+    margin-bottom: 16px;
+    border: 1px solid #c5d5e8;
+  }
+
+  .mock-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.83rem;
+  }
+
+  .mock-table th {
+    background: var(--bg-soft);
+    color: var(--slate-light);
+    font-weight: 700;
+    text-align: left;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.74rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .mock-table td {
+    padding: 11px 14px;
+    border-bottom: 1px solid #f8fafc;
+    color: var(--slate-mid);
+    font-size: 0.84rem;
+  }
+
+  .mock-table tr:last-child td { border-bottom: none; }
+  .mock-table tr:hover td { background: var(--bg-soft); }
+
+  .pill {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 100px;
+    font-size: 0.7rem;
+    font-weight: 700;
+  }
+
+  .pill-green { background: var(--navy-pale); color: var(--navy); border: 1px solid #c5d5e8; }
+  .pill-blue { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+  .pill-orange { background: #fff7ed; color: #c2410c; border: 1px solid #fed7aa; }
+  .pill-red { background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
+
+  .amount-green { color: var(--green); font-weight: 700; }
+  .amount-red { color: #ef4444; font-weight: 700; }
+
+  .mock-summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+  }
+
+  .ms-card {
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    text-align: center;
+  }
+
+  .ms-label { font-size: 0.68rem; color: var(--slate-light); font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 5px; }
+  .ms-value { font-family: 'Fraunces', serif; font-size: 1.1rem; font-weight: 700; color: var(--navy); }
+
+  /* ── COMPARE ── */
+  .compare-section { background: var(--bg-soft); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .compare-header { text-align: center; margin-bottom: 52px; }
+  .compare-header .sec-sub { margin: 0 auto; text-align: center; }
+
+  .compare-wrap {
+    overflow-x: auto;
+    border-radius: 16px;
+    border: 1.5px solid var(--border);
+    background: #fff;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.05);
+  }
+
+  .compare-table { width: 100%; border-collapse: collapse; }
+
+  .compare-table thead {
+    background: var(--bg-soft);
+    border-bottom: 1.5px solid var(--border);
+  }
+
+  .compare-table th {
+    padding: 22px 28px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 0.88rem;
+    color: var(--slate);
+  }
+
+  .th-feature {
+    text-align: left !important;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--slate-light);
+    width: 42%;
+  }
+
+  .th-pro {
+    background: #fffbeb;
+    border-left: 2px solid #fde68a;
+    border-right: 2px solid #fde68a;
+  }
+
+  .pro-rec {
+    display: inline-block;
+    background: var(--amber);
+    color: #fff;
+    font-size: 0.62rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    padding: 2px 7px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+
+  .compare-table tbody tr {
+    border-bottom: 1px solid #f1f5f9;
+    transition: background 0.1s;
+  }
+
+  .compare-table tbody tr:hover { background: #fafcff; }
+  .compare-table tbody tr:last-child { border-bottom: none; }
+
+  .compare-table td {
+    padding: 15px 28px;
+    text-align: center;
+    font-size: 0.88rem;
+    color: var(--slate-mid);
+  }
+
+  .compare-table td:first-child {
+    text-align: left;
+    color: var(--slate);
+    font-weight: 500;
+  }
+
+  .td-pro {
+    background: #fffdf5;
+    border-left: 2px solid #fde68a;
+    border-right: 2px solid #fde68a;
+    font-weight: 600;
+    color: var(--slate);
+  }
+
+  .ck { color: var(--green); font-size: 1rem; font-weight: 700; }
+  .cx { color: #cbd5e1; font-size: 1rem; }
+
+  /* ── PRICING ── */
+  .pricing-section { background: #fff; }
+  .pricing-header { text-align: center; margin-bottom: 52px; }
+  .pricing-header .sec-sub { margin: 0 auto; text-align: center; }
+
+  .pricing-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+    max-width: 780px;
+    margin: 0 auto;
+  }
+
+  .pc {
+    border: 1.5px solid var(--border);
+    border-radius: 20px;
+    padding: 36px;
+    background: #fff;
+    transition: all 0.2s;
+    position: relative;
+  }
+
+  .pc:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.08); transform: translateY(-3px); }
+
+  .pc.featured {
+    border-color: var(--amber);
+    background: #fffbf0;
+    box-shadow: 0 8px 40px rgba(245,158,11,0.12);
+  }
+
+  .pc-ribbon {
+    position: absolute;
+    top: -1px; right: 28px;
+    background: var(--amber);
+    color: #fff;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 5px 12px 7px;
+    border-radius: 0 0 10px 10px;
+  }
+
+  .pc-plan {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--slate-light);
+    margin-bottom: 6px;
+  }
+
+  .pc-name {
+    font-family: 'Fraunces', serif;
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--slate);
+    margin-bottom: 4px;
+    letter-spacing: -0.02em;
+  }
+
+  .pc.featured .pc-name { color: var(--amber-dark); }
+
+  .pc-tagline {
+    font-size: 0.83rem;
+    color: var(--slate-light);
+    font-style: italic;
+    margin-bottom: 28px;
+  }
+
+  .pc-price-row {
+    padding: 20px 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 24px;
+  }
+
+  .pc-price {
+    font-family: 'Fraunces', serif;
+    font-size: 2.8rem;
+    font-weight: 900;
+    color: var(--slate);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .pc.featured .pc-price { color: var(--amber-dark); }
+
+  .pc-price-note {
+    font-size: 0.78rem;
+    color: var(--slate-light);
+    margin-top: 6px;
+  }
+
+  .pc-features { list-style: none; margin-bottom: 28px; }
+
+  .pc-features li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 9px 0;
+    font-size: 0.875rem;
+    color: var(--slate-mid);
+    border-bottom: 1px solid #f8fafc;
+  }
+
+  .pc-features li:last-child { border-bottom: none; }
+
+  .pf-check { color: var(--green); font-weight: 700; flex-shrink: 0; margin-top: 1px; font-size: 0.85rem; }
+
+  .btn-buy-lite {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    padding: 14px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    border: 2px solid var(--navy);
+    color: var(--navy);
+    transition: all 0.15s;
+    background: transparent;
+  }
+
+  .btn-buy-lite:hover {
+    background: var(--navy);
+    color: #fff;
+  }
+
+  .btn-buy-pro {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    padding: 14px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    background: var(--amber);
+    color: #fff;
+    transition: all 0.15s;
+    box-shadow: 0 4px 16px rgba(245,158,11,0.3);
+  }
+
+  .btn-buy-pro:hover {
+    background: #d97706;
+    box-shadow: 0 6px 24px rgba(245,158,11,0.4);
+    transform: translateY(-1px);
+  }
+
+  .pricing-note {
+    text-align: center;
+    margin-top: 24px;
+    font-size: 0.8rem;
+    color: var(--slate-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  /* ── FAQ ── */
+  .faq-section { background: #fff; }
+  .faq-header { text-align: center; margin-bottom: 52px; }
+
+  .faq-list { max-width: 680px; margin: 0 auto; }
+
+  .faq-item {
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    transition: border-color 0.15s;
+  }
+
+  .faq-item.open { border-color: var(--navy); }
+
+  .faq-q {
+    width: 100%;
+    background: #fff;
+    border: none;
+    padding: 18px 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+    cursor: pointer;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--slate);
+    gap: 16px;
+    transition: background 0.15s;
+  }
+
+  .faq-q:hover { background: var(--bg-soft); }
+
+  .faq-icon {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    color: var(--slate-light);
+    flex-shrink: 0;
+    transition: all 0.25s;
+  }
+
+  .faq-item.open .faq-icon {
+    background: var(--navy);
+    border-color: var(--navy);
+    color: #fff;
+    transform: rotate(180deg);
+  }
+
+  .faq-a {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease;
+    background: var(--bg-soft);
+  }
+
+  .faq-item.open .faq-a { max-height: 300px; }
+
+  .faq-a-inner {
+    padding: 18px 22px;
+    font-size: 0.86rem;
+    color: var(--slate-mid);
+    line-height: 1.75;
+    border-top: 1px solid var(--border);
+  }
+
+  /* ── FOOTER CTA ── */
+  .footer-cta {
+    background: var(--navy);
+    padding: 80px 32px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .footer-cta::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -10%;
+    width: 120%; height: 200%;
+    background: radial-gradient(ellipse at 50% 50%, rgba(255,255,255,0.05) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .footer-cta h2 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 900;
+    color: #fff;
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+    margin-bottom: 16px;
+  }
+
+  .footer-cta p {
+    color: rgba(255,255,255,0.75);
+    font-size: 1rem;
+    margin-bottom: 36px;
+    font-weight: 400;
+  }
+
+  .footer-cta-btns {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-white {
+    background: var(--amber);
+    color: #fff;
+    text-decoration: none;
+    padding: 14px 28px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.15s;
+    box-shadow: 0 4px 16px rgba(245,158,11,0.3);
+  }
+
+  .btn-white:hover {
+    background: #d97706;
+    box-shadow: 0 6px 24px rgba(245,158,11,0.4);
+    transform: translateY(-1px);
+  }
+
+  .btn-white-outline {
+    background: transparent;
+    color: #fff;
+    text-decoration: none;
+    padding: 14px 24px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border: 2px solid rgba(255,255,255,0.4);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.15s;
+  }
+
+  .btn-white-outline:hover {
+    border-color: #fff;
+    background: rgba(255,255,255,0.1);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #111e2f;
+    padding: 40px 32px;
+    text-align: center;
+  }
+
+  .footer-logo {
+    font-family: 'Fraunces', serif;
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: #fff;
+    margin-bottom: 10px;
+    letter-spacing: -0.02em;
+  }
+
+  .footer-logo span { color: var(--amber); }
+
+  .footer-tag {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 24px;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+
+  .footer-links a {
+    text-decoration: none;
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.4);
+    transition: color 0.15s;
+  }
+
+  .footer-links a:hover { color: rgba(255,255,255,0.8); }
+
+  .footer-copy { font-size: 0.76rem; color: rgba(255,255,255,0.25); }
+
+  /* ── IMAGE PREVIEW TABS ── */
+  .img-tab-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    justify-content: flex-start;
+    margin-bottom: 16px;
+    padding-bottom: 4px;
+  }
+
+  .img-tab-row::-webkit-scrollbar { display: none; }
+
+  /* Center when tabs fit without scrolling */
+  @supports (justify-content: safe center) {
+    .img-tab-row { justify-content: safe center; }
+  }
+
+  .img-tab-btn {
+    background: var(--bg-soft);
+    border: 1.5px solid var(--border);
+    border-radius: 100px;
+    padding: 8px 16px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.83rem;
+    font-weight: 600;
+    color: var(--slate-light);
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .img-tab-btn:hover {
+    border-color: var(--navy);
+    color: var(--navy);
+    background: var(--navy-pale);
+  }
+
+  .img-tab-btn.active {
+    background: var(--navy);
+    border-color: var(--navy);
+    color: #fff;
+    box-shadow: 0 2px 10px rgba(26,46,74,0.2);
+  }
+
+  .img-tab-btn svg { flex-shrink: 0; }
+
+  .img-pane { display: none; }
+  .img-pane.active { display: block; animation: fadeIn 0.3s ease; }
+
+  .preview-img {
+    width: 100%;
+    border-radius: 16px;
+    border: 1.5px solid var(--border);
+    box-shadow: 0 12px 48px rgba(0,0,0,0.1);
+    display: block;
+  }
+
+  @media (max-width: 768px) {
+    .img-tab-row { gap: 6px; margin-bottom: 12px; }
+    .img-tab-btn { font-size: 0.76rem; padding: 7px 12px; }
+    .preview-img { border-radius: 10px; }
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── HAMBURGER ── */
+  .nav-hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+    background: none;
+    border: none;
+  }
+  .nav-hamburger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: rgba(255,255,255,0.85);
+    border-radius: 2px;
+    transition: all 0.25s;
+  }
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .nav-mobile-menu {
+    display: none;
+    position: fixed;
+    top: 64px;
+    left: 0; right: 0;
+    width: 100%;
+    background: var(--navy);
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding: 12px 20px 20px;
+    z-index: 101;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  }
+  .nav-mobile-menu.open { display: block; animation: slideDown 0.2s ease; }
+
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .nav-mobile-menu a {
+    display: block;
+    padding: 13px 0;
+    text-decoration: none;
+    color: rgba(255,255,255,0.75);
+    font-size: 0.95rem;
+    font-weight: 500;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    transition: color 0.15s;
+  }
+  .nav-mobile-menu a:last-child { border-bottom: none; }
+  .nav-mobile-menu a:hover { color: #fff; }
+  .nav-mobile-menu .mob-cta {
+    display: block;
+    margin-top: 12px;
+    text-align: center;
+    background: var(--amber);
+    color: #fff !important;
+    border-radius: 8px;
+    padding: 13px;
+    font-weight: 700;
+    border-bottom: none !important;
+  }
+
+  /* ── TABLET ── */
+  @media (max-width: 1024px) {
+    .hero { gap: 40px; }
+    .wrap { padding: 72px 28px; }
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width: 768px) {
+    /* === GLOBAL MOBILE OVERFLOW LOCK === */
+    html, body { overflow-x: hidden !important; }
+    section, footer, nav, .wrap, .hero, .hero-left, .hero-right { 
+      max-width: 100vw !important; 
+      overflow-x: hidden !important;
+    }
+
+    /* NAV */
+    nav {
+      padding: 0 20px;
+      width: 100%;
+    }
+    .nav-links { display: none; }
+    .nav-hamburger { display: flex; }
+
+    /* HERO */
+    .hero {
+      grid-template-columns: 1fr !important;
+      padding: 36px 20px 44px !important;
+      gap: 32px !important;
+      width: 100% !important;
+    }
+    .product-card { 
+      max-width: 100% !important;
+      width: 100% !important;
+    }
+    .hero-ctas { 
+      flex-direction: column; 
+      width: 100%;
+      gap: 10px;
+    }
+    .btn-green, .btn-outline {
+      justify-content: center;
+      text-align: center;
+      width: 100% !important;
+      max-width: 100% !important;
+    }
+    .hero-sub { 
+      font-size: 0.95rem; 
+      word-break: break-word;
+    }
+    h1 { font-size: clamp(1.85rem, 7vw, 2.5rem); }
+    h2 { font-size: clamp(1.5rem, 5.5vw, 1.9rem); }
+
+    /* SECTIONS */
+    .wrap { padding: 44px 20px !important; }
+
+    /* PAIN */
+    .pain-grid { grid-template-columns: 1fr; gap: 12px; }
+    .pain-card { padding: 18px; }
+
+    /* PREVIEW TABS */
+    .tab-row {
+      width: 100%;
+      max-width: 100%;
+      border-radius: 10px;
+    }
+    .tab-btn { flex: 1; padding: 9px 8px; font-size: 0.8rem; }
+
+    /* MOCK BROWSER */
+    .mock-browser { 
+      border-radius: 12px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .mock-topbar { padding: 10px 14px; }
+    .mock-filename { display: none; }
+    .mock-body {
+      padding: 12px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .mock-table { min-width: 380px; }
+    .mock-table th, .mock-table td { padding: 7px 8px; font-size: 0.74rem; }
+    .mock-summary {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .ms-card { 
+      padding: 12px 14px; 
+      text-align: left;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .ms-label { margin-bottom: 0; }
+    .ms-value { font-size: 1rem; }
+    .mock-sheet-tabs { overflow-x: auto; gap: 0; }
+    .mst { padding: 7px 10px; font-size: 0.7rem; white-space: nowrap; }
+
+    /* COMPARE */
+    .compare-section .wrap { padding: 44px 20px !important; } /* Mengembalikan padding sisi */
+    .compare-header, .compare-header .sec-sub { padding: 0; }
+    .compare-wrap {
+      border-radius: 12px; /* Mengembalikan efek melengkung */
+      border: 1.5px solid var(--border); /* Menambahkan border kembali */
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .compare-table { min-width: unset; } 
+    .compare-table th, .compare-table td { padding: 10px 14px; font-size: 0.8rem; }
+
+    /* PRICING */
+    .pricing-cards {
+      grid-template-columns: 1fr;
+      max-width: 100%;
+    }
+    .pc { padding: 28px 22px; }
+    .pc-price { font-size: 2.2rem; }
+
+    /* FOOTER CTA */
+    .footer-cta { padding: 52px 20px; }
+    .footer-cta-btns { flex-direction: column; align-items: stretch; gap: 10px; }
+    .btn-white, .btn-white-outline {
+      justify-content: center;
+      width: 100% !important;
+      max-width: 100% !important;
+    }
+
+    /* FOOTER */
+    footer { padding: 28px 20px; }
+    .footer-links { gap: 12px; }
+  }
+
+  @media (max-width: 400px) {
+    nav { padding: 0 16px; }
+    .hero { padding: 32px 16px 40px !important; }
+    .wrap { padding: 36px 16px !important; }
+    h1 { font-size: 1.75rem; }
+    .pc { padding: 24px 18px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Fink<span>a</span></div>
+  <ul class="nav-links">
+    <li><a href="#preview">Preview</a></li>
+    <li><a href="#compare">Perbandingan</a></li>
+    <li><a href="#harga">Harga</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#harga" class="nav-cta">Beli Sekarang</a></li>
+  </ul>
+  <button class="nav-hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="nav-mobile-menu" id="mobileMenu">
+  <a href="#preview" onclick="closeMenu()">Preview</a>
+  <a href="#compare" onclick="closeMenu()">Perbandingan</a>
+  <a href="#harga" onclick="closeMenu()">Harga</a>
+  <a href="#faq" onclick="closeMenu()">FAQ</a>
+  <a href="#harga" class="mob-cta" onclick="closeMenu()">Beli Sekarang</a>
+</div>
+
+<section style="background:var(--bg); border-bottom: 1px solid var(--border); overflow:hidden; width:100%; max-width:100vw;">
+  <div class="hero">
+    <div class="hero-left">
+      <div class="hero-badge">Template Keuangan UMKM</div>
+      <h1>Keuangan Usahamu<br><em>Rapi Otomatis</em><br>Tanpa Ribet</h1>
+      <p class="hero-sub">
+        Tidak perlu ilmu akuntansi. Tidak perlu aplikasi mahal. Cukup isi spreadsheet — laporan laba rugi langsung jadi sendiri.
+      </p>
+      <div class="hero-ctas">
+        <a href="#harga" class="btn-green">Lihat Harga & Beli <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        <a href="#preview" class="btn-outline"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg> Preview Dulu</a>
+      </div>
+      <div class="hero-trust">
+        <div class="trust-avatars">
+          <div class="trust-avatar ta1">R</div>
+          <div class="trust-avatar ta2">D</div>
+          <div class="trust-avatar ta3">N</div>
+          <div class="trust-avatar ta4">A</div>
+        </div>
+        <div class="trust-text">Dipakai oleh <strong>pemilik UMKM</strong> di seluruh Indonesia</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pain-section">
+  <div class="wrap">
+    <div class="pain-header reveal">
+      <div class="section-chip amber">Pernah ngalamin ini?</div>
+      <h2>Masalah yang Bikin Usaha<br>Susah Berkembang</h2>
+    </div>
+    <div class="pain-grid">
+      <div class="pain-card reveal">
+        <div class="pain-emoji"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2e4a70" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 15s1.5-2 4-2 4 2 4 2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div>
+        <div>
+          <h3>Nggak tahu untung atau rugi</h3>
+          <p>Pemasukan masuk terus tapi nggak jelas kemana perginya. Akhir bulan bingung uangnya habis buat apa.</p>
+        </div>
+      </div>
+      <div class="pain-card reveal">
+        <div class="pain-emoji"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2e4a70" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10,9 9,9 8,9"/></svg></div>
+        <div>
+          <h3>Catatan keuangan berantakan</h3>
+          <p>Nyebar di notes HP, buku tulis, WhatsApp. Susah dicek semua dalam satu tempat.</p>
+        </div>
+      </div>
+      <div class="pain-card reveal">
+        <div class="pain-emoji"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2e4a70" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg></div>
+        <div>
+          <h3>Stok habis tapi nggak sadar</h3>
+          <p>Pesanan datang, stok udah kosong. Kehilangan omzet karena kelalaian stok.</p>
+        </div>
+      </div>
+      <div class="pain-card reveal">
+        <div class="pain-emoji"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2e4a70" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+        <div>
+          <h3>Keuangan pribadi & usaha campur</h3>
+          <p>Duit usaha dipakai belanja pribadi. Susah nentuin gaji sendiri karena semua nyampur.</p>
+        </div>
+      </div>
+      <div class="pain-card reveal">
+        <div class="pain-emoji"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2e4a70" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="12" y1="17" x2="8" y2="17"/></svg></div>
+        <div>
+          <h3>Nggak ada laporan yang rapi</h3>
+          <p>Mau pinjam modal atau ajak investor, tidak ada laporan keuangan yang bisa ditunjukkan.</p>
+        </div>
+      </div>
+      <div class="pain-card reveal">
+        <div class="pain-emoji"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2e4a70" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg></div>
+        <div>
+          <h3>Aplikasi keuangan terlalu ribet</h3>
+          <p>Interface bikin bingung, harus langganan bulanan, fiturnya kebanyakan tapi yang dipake sedikit.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="preview-section" id="preview">
+  <div class="wrap">
+    <div class="preview-header reveal">
+      <div class="section-chip">Lihat isinya dulu</div>
+      <h2>Preview Tampilan Finka</h2>
+      <p class="sec-sub">Bersih, rapi, langsung bisa dipakai. Tanpa setup rumit.</p>
+    </div>
+
+    <div class="tab-row reveal">
+      <button class="tab-btn active" onclick="switchTab('pro', this)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+        Finka Pro
+      </button>
+      <button class="tab-btn" onclick="switchTab('lite', this)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+        Finka Lite
+      </button>
+    </div>
+
+    <div class="preview-pane active" id="pane-pro">
+      <div class="img-tab-row reveal">
+        <button class="img-tab-btn active" onclick="switchImgTab('pro','dashboard',this)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          Dashboard
+        </button>
+        <button class="img-tab-btn" onclick="switchImgTab('pro','pemasukan',this)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23,6 13.5,15.5 8.5,10.5 1,18"/><polyline points="17,6 23,6 23,12"/></svg>
+          Pemasukan
+        </button>
+        <button class="img-tab-btn" onclick="switchImgTab('pro','pengeluaran',this)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23,18 13.5,8.5 8.5,13.5 1,6"/><polyline points="17,18 23,18 23,12"/></svg>
+          Pengeluaran
+        </button>
+        <button class="img-tab-btn" onclick="switchImgTab('pro','stok',this)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+          Stok Barang
+        </button>
+        <button class="img-tab-btn" onclick="switchImgTab('pro','panduan',this)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          Panduan
+        </button>
+      </div>
+
+      <div class="img-pane active" id="pro-dashboard">
+        <img src="images/pro-dashboard.jpg" alt="Finka Pro — Dashboard Keuangan Otomatis" class="preview-img reveal" loading="lazy">
+      </div>
+      <div class="img-pane" id="pro-pemasukan">
+        <img src="images/pro-pemasukan.jpg" alt="Finka Pro — Sheet Pemasukan" class="preview-img" loading="lazy">
+      </div>
+      <div class="img-pane" id="pro-pengeluaran">
+        <img src="images/pro-pengeluaran.jpg" alt="Finka Pro — Sheet Pengeluaran" class="preview-img" loading="lazy">
+      </div>
+      <div class="img-pane" id="pro-stok">
+        <img src="images/pro-stok.jpg" alt="Finka Pro — Stok Barang Otomatis" class="preview-img" loading="lazy">
+      </div>
+      <div class="img-pane" id="pro-panduan">
+        <img src="images/pro-panduan.jpg" alt="Finka Pro — Panduan Penggunaan" class="preview-img" loading="lazy">
+      </div>
+    </div>
+
+    <div class="preview-pane" id="pane-lite">
+      <div class="img-tab-row">
+        <button class="img-tab-btn active" onclick="switchImgTab('lite','overview',this)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+          Overview
+        </button>
+        <button class="img-tab-btn" onclick="switchImgTab('lite','pemasukan',this)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23,6 13.5,15.5 8.5,10.5 1,18"/><polyline points="17,6 23,6 23,12"/></svg>
+          Pemasukan
+        </button>
+        <button class="img-tab-btn" onclick="switchImgTab('lite','dashboard',this)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          Dashboard
+        </button>
+        <button class="img-tab-btn" onclick="switchImgTab('lite','pengeluaran',this)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23,18 13.5,8.5 8.5,13.5 1,6"/><polyline points="17,18 23,18 23,12"/></svg>
+          Pengeluaran
+        </button>
+      </div>
+
+      <div class="img-pane active" id="lite-overview">
+        <img src="images/lite-overview.jpg" alt="Finka Lite — Tampilan Mobile" class="preview-img reveal" loading="lazy">
+      </div>
+      <div class="img-pane" id="lite-pemasukan">
+        <img src="images/lite-pemasukan.jpg" alt="Finka Lite — Catat Uang Masuk" class="preview-img" loading="lazy">
+      </div>
+      <div class="img-pane" id="lite-dashboard">
+        <img src="images/lite-dashboard.jpg" alt="Finka Lite — Dashboard Mobile" class="preview-img" loading="lazy">
+      </div>
+      <div class="img-pane" id="lite-pengeluaran">
+        <img src="images/lite-pengeluaran.jpg" alt="Finka Lite — Lacak Pengeluaran" class="preview-img" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="compare-section" id="compare" style="overflow-x:hidden;">
+  <div class="wrap">
+    <div class="compare-header reveal">
+      <div class="section-chip">Pilih yang sesuai</div>
+      <h2>Lite vs Pro — Apa Bedanya?</h2>
+      <p class="sec-sub">Keduanya powerful. Pilih sesuai kebutuhan usahamu sekarang.</p>
+    </div>
+    <div class="compare-wrap reveal">
+      <table class="compare-table">
+        <thead>
+  <tr>
+    <th class="th-feature">Fitur</th>
+    <th>Finka Lite<br>
+      <small style="font-weight:400; color:var(--slate-light)">Rp29.000</small>
+    </th>
+    <th class="th-pro">Finka Pro <span class="pro-rec">Terlaris</span><br>
+      <span style="text-decoration: line-through; color: #94a3b8; font-size: 0.75rem; font-weight: 400;">Rp99.000</span>
+      <small style="font-weight:700; color:#b45309; font-size: 0.88rem;">Rp49.000</small>
+    </th>
+  </tr>
+</thead>
+
+        <tbody>
+          <tr><td>Catatan Pemasukan</td><td><span class="ck">✓</span> 4 kolom</td><td class="td-pro"><span class="ck">✓</span> 6 kolom + Kategori</td></tr>
+          <tr><td>Catatan Pengeluaran</td><td><span class="ck">✓</span> 4 kolom</td><td class="td-pro"><span class="ck">✓</span> 6 kolom + Kategori</td></tr>
+          <tr><td>Dashboard Otomatis</td><td><span class="ck">✓</span></td><td class="td-pro"><span class="ck">✓</span></td></tr>
+          <tr><td>Laba Bersih Otomatis</td><td><span class="ck">✓</span></td><td class="td-pro"><span class="ck">✓</span></td></tr>
+          <tr><td>Rekap Bulanan</td><td><span class="ck">✓</span></td><td class="td-pro"><span class="ck">✓</span></td></tr>
+          <tr><td>Status Untung / Rugi</td><td><span class="ck">✓</span></td><td class="td-pro"><span class="ck">✓</span></td></tr>
+          <tr><td>Panduan Cara Pakai</td><td><span class="ck">✓</span></td><td class="td-pro"><span class="ck">✓</span></td></tr>
+          <tr><td>Kategori Transaksi (Dropdown)</td><td><span class="cx">✕</span></td><td class="td-pro"><span class="ck">✓</span></td></tr>
+          <tr><td>Metode Pembayaran Tercatat</td><td><span class="cx">✕</span></td><td class="td-pro"><span class="ck">✓</span></td></tr>
+          <tr><td>Manajemen Stok Barang</td><td><span class="cx">✕</span></td><td class="td-pro"><span class="ck">✓</span></td></tr>
+          <tr><td>Status Stok Otomatis</td><td><span class="cx">✕</span></td><td class="td-pro"><span class="ck">✓</span></td></tr>
+          <tr><td>Analisis Margin Laba (%)</td><td><span class="cx">✕</span></td><td class="td-pro"><span class="ck">✓</span></td></tr>
+          <tr><td>Kapasitas Data</td><td>200 baris/sheet</td><td class="td-pro">500 baris/sheet</td></tr>
+          <tr><td>Optimal untuk</td><td><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:3px"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg> HP</td><td class="td-pro"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:3px"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg> PC + HP</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="pricing-section" id="harga">
+  <div class="wrap">
+    <div class="pricing-header reveal">
+      <div class="section-chip">Investasi sekali, manfaat selamanya</div>
+      <h2>Pilih Paket yang Pas</h2>
+      <p class="sec-sub">File langsung dikirim otomatis ke email kamu setelah pembayaran.</p>
+    </div>
+    <div class="pricing-cards">
+      <div class="pc reveal">
+        <div class="pc-plan">Finka</div>
+        <div class="pc-name">Lite</div>
+        <div class="pc-tagline">"Simpel. Cepat. Akurat."</div>
+        <div class="pc-price-row">
+          <div class="pc-price">Rp29.000</div>
+          <div class="pc-price-note">Bayar sekali · Pakai selamanya · File .xlsx</div>
+        </div>
+        <ul class="pc-features">
+          <li><span class="pf-check">✓</span> Catatan Pemasukan & Pengeluaran</li>
+          <li><span class="pf-check">✓</span> Dashboard & Rekap Bulanan Otomatis</li>
+          <li><span class="pf-check">✓</span> Laba Bersih otomatis terhitung</li>
+          <li><span class="pf-check">✓</span> Status Untung/Rugi tiap bulan</li>
+          <li><span class="pf-check">✓</span> Cocok untuk HP — tampilan ringan</li>
+          <li><span class="pf-check">✓</span> Panduan cara pakai di dalam file</li>
+        </ul>
+        <a href="https://trakteer.id/finka" target="_blank" class="btn-buy-lite">Beli Finka Lite <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+
+      <div class="pc featured reveal">
+        <div class="pc-ribbon">⭐ Terlaris</div>
+        <div class="pc-plan">Finka</div>
+        <div class="pc-name">Pro</div>
+        <div class="pc-tagline">"Rapi. Otomatis. Profesional."</div>
+        <div class="pc-price-row">
+          <div class="pc-price">
+            <span style="text-decoration: line-through; color: var(--slate-light); font-size: 1.4rem; margin-right: 8px;">Rp99.000</span>
+            Rp49.000
+          </div>
+          <div class="pc-price-note">Bayar sekali · Pakai selamanya · File .xlsx</div>
+        </div>
+        <ul class="pc-features">
+          <li><span class="pf-check">✓</span> Semua fitur Finka Lite</li>
+          <li><span class="pf-check">✓</span> Kategori transaksi dengan dropdown ▼</li>
+          <li><span class="pf-check">✓</span> Metode pembayaran tercatat rapi</li>
+          <li><span class="pf-check">✓</span> Manajemen Stok Barang otomatis</li>
+          <li><span class="pf-check">✓</span> Status stok: Aman / Hampir Habis / Habis</li>
+          <li><span class="pf-check">✓</span> Analisis Margin Laba (%) per bulan</li>
+          <li><span class="pf-check">✓</span> Kapasitas 500 baris data per sheet</li>
+          <li><span class="pf-check">✓</span> Optimal untuk PC — tampilan profesional</li>
+        </ul>
+        <a href="https://trakteer.id/finka" target="_blank" class="btn-buy-pro">Beli Finka Pro <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+    </div>
+    <p class="pricing-note"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:5px;flex-shrink:0"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Pembayaran aman via Trakteer.id · File dikirim otomatis ke email setelah pembayaran berhasil</p>
+  </div>
+</section>
+
+<section class="faq-section" id="faq">
+  <div class="wrap">
+    <div class="faq-header reveal">
+      <div class="section-chip">Ada pertanyaan?</div>
+      <h2>FAQ — Pertanyaan yang Sering Ditanya</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item reveal">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Setelah beli, filenya dapat format apa?
+          <div class="faq-icon">▾</div>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">Kamu dapat file <strong>.xlsx</strong> yang dikirim otomatis ke email setelah pembayaran berhasil lewat Trakteer.id. Bisa dibuka di Google Sheets (gratis), WPS Office, atau Microsoft Excel.</div>
+        </div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Apa perbedaan utama Finka Lite dan Pro?
+          <div class="faq-icon">▾</div>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner"><strong>Finka Lite</strong> cocok untuk yang baru mulai, pakai HP, and ingin pencatatan simpel — cukup 4 kolom per transaksi. <strong>Finka Pro</strong> lebih lengkap: ada kategori, metode pembayaran, manajemen stok otomatis , dan analisis margin laba.</div>
+        </div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Perlu skill Excel untuk menggunakannya?
+          <div class="faq-icon">▾</div>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">Sama sekali tidak! Cukup isi data di kolom yang tersedia — semua perhitungan, dashboard, and laporan sudah <strong>otomatis</strong>. Di dalam file ada sheet Panduan Cara Pakai yang mudah diikuti.</div>
+        </div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Bisa dipakai di HP (Google Sheets)?
+          <div class="faq-icon">▾</div>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">Bisa! <strong>Finka Lite</strong> dioptimasi khusus untuk HP. Finka Pro juga bisa dibuka di HP tapi lebih optimal di PC karena ada lebih banyak kolom. Keduanya kompatibel dengan Google Sheets gratis.</div>
+        </div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Ada biaya langganan atau masa berlaku?
+          <div class="faq-icon">▾</div>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner"><strong>Tidak ada!</strong> Bayar sekali, file milik kamu selamanya. Kamu bisa duplikat file-nya tiap tahun untuk pencatatan baru. Tanpa biaya tambahan apapun.</div>
+        </div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Ada pertanyaan atau butuh bantuan?
+          <div class="faq-icon">▾</div>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">DM kami di Instagram <strong>@finka.id_</strong>. Kami dengan senang hati membantu kamu yang baru mulai menggunakan Finka.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="footer-cta">
+  <h2>Keuangan Usahamu Bisa<br>Rapi Mulai Hari Ini</h2>
+  <p>Satu kali beli, dipakai selamanya. Mulai dari Rp29.000.</p>
+  <div class="footer-cta-btns">
+    <a href="https://trakteer.id/finka" target="_blank" class="btn-white"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg> Beli Finka Pro — Rp49.000</a>
+    <a href="https://trakteer.id/finka" target="_blank" class="btn-white-outline">Mulai dari Lite — Rp29.000</a>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">Fink<span>a</span></div>
+  <div class="footer-tag">Template Keuangan UMKM · Rapi. Otomatis. Profesional.</div>
+  <div class="footer-links">
+    <a href="#preview">Preview</a>
+    <a href="#compare">Perbandingan</a>
+    <a href="#harga">Harga</a>
+    <a href="#faq">FAQ</a>
+    <a href="https://instagram.com/finka.id_" target="_blank">@finka.id_</a>
+  </div>
+  <div class="footer-copy">© 2026 Finka · Dibuat untuk UMKM Indonesia 🇮🇩</div>
+</footer>
+
+<script>
+  // Hamburger menu
+  function toggleMenu() {
+    const btn = document.getElementById('hamburger');
+    const menu = document.getElementById('mobileMenu');
+    btn.classList.toggle('open');
+    menu.classList.toggle('open');
+  }
+  function closeMenu() {
+    document.getElementById('hamburger').classList.remove('open');
+    document.getElementById('mobileMenu').classList.remove('open');
+  }
+
+  // Scroll reveal
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 55);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  // Tab switch
+  function switchTab(tab, btn) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.preview-pane').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('pane-' + tab).classList.add('active');
+  }
+
+  // Image sub-tab switch
+  function switchImgTab(version, tab, btn) {
+    const pane = document.getElementById('pane-' + version);
+    pane.querySelectorAll('.img-tab-btn').forEach(b => b.classList.remove('active'));
+    pane.querySelectorAll('.img-pane').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(version + '-' + tab).classList.add('active');
+  }
+
+  // FAQ
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+</script>
+
+</body>
+</html>
